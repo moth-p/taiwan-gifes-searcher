@@ -6,7 +6,6 @@ import Loading from "./components/Loading";
 
 const MainLayout = lazy(() => import("./layouts/MainLayout"));
 const Home = lazy(() => import("./pages/Home"));
-const Favorite = lazy(() => import("./pages/Favorite"));
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,7 +14,6 @@ createRoot(document.getElementById("root")).render(
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
-            <Route path="favorite" element={<Favorite />} />
           </Route>
         </Routes>
       </Suspense>
