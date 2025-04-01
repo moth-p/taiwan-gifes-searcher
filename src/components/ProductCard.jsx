@@ -1,11 +1,12 @@
-const ProductCard = ({ product }) => {
-  function onClickFavorite() {
-    alert("clicked");
-  }
+const ProductCard = ({ product, onClick }) => {
+  // function onClickFavorite() {
+  //   alert("clicked");
+  // }
+
 
   return (
-    <div className="cursor-pointer relative w-full max-w-[180px] md:max-w-[200px] h-[280px] md:h-[300px] flex flex-col p-2 md:p-4 gap-2 md:gap-4 border-2 border-stone-300 bg-stone-200 rounded-lg mx-auto hover:opacity-80 shadow-md">
-      <button
+    <div onClick={onClick} className="cursor-pointer relative w-full max-w-[180px] md:max-w-[200px] h-[280px] md:h-[300px] flex flex-col p-2 md:p-4 gap-2 md:gap-4 border-2 border-stone-300 bg-stone-200 rounded-lg mx-auto hover:opacity-80 shadow-md">
+      {/* <button
         onClick={onClickFavorite}
         className="absolute top-5 right-5 w-9 h-9 p-2 bg-stone-100 rounded-full text-3xl text-stone-500 flex justify-center items-center"
       >
@@ -20,7 +21,7 @@ const ProductCard = ({ product }) => {
             d="M12.001 4.529a6 6 0 0 1 8.242.228a6 6 0 0 1 .236 8.236l-8.48 8.492l-8.478-8.492a6 6 0 0 1 8.48-8.464"
           />
         </svg>
-      </button>
+      </button> */}
       <div className="w-full max-w-[180px] mx-auto max-h-[150px] rounded-lg">
         <img
           src={

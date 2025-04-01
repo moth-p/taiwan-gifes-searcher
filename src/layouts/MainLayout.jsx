@@ -11,7 +11,7 @@ const MainLayout = () => {
   };
 
   return (
-    <section className="relative py-40 md:py-20">
+    <section className="relative w-screen h-screen py-40 md:py-20">
       {/* Nav */}
       <NavBar onSearch={handleSearch} />
       {/* Main */}
