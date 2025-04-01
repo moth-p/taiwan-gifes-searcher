@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ onSearch }) => {
   const [input, setInput] = useState("");
 
   function handleSearch(e) {
     e.preventDefault();
 
-    if (input.trim() === "") return;
+    const keywords = input.trim();
+    if (keywords === "") return;
+    // 按照 keywords 內容來變更查詢參數
+    onSearch(keywords);
+
     setInput("");
   }
 
