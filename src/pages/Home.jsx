@@ -132,7 +132,7 @@ const Home = () => {
           )}
         </main>
       ) : (
-        <main className="flex flex-col justify-start items-center gap-10 py-10">
+        <main className="flex flex-col justify-start items-center gap-10 py-20 md:py-10">
           <div>
             <p className="text-slate-500 mb-5">搜尋想要的伴手禮</p>
           </div>

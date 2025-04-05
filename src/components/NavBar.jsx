@@ -1,8 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const NavBar = ({ onSearch }) => {
   const [input, setInput] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // 檢查 localStorage 是否有 token（登入狀態）
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      await axios.post(
+        "http://localhost:8030/api/logout",
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+    } catch (err) {
+      console.error("登出失敗", err);
+    }
+  };
 
   function handleSearch(e) {
     e.preventDefault();
@@ -16,9 +44,9 @@ const NavBar = ({ onSearch }) => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 z-30 flex flex-col md:flex-row items-center w-screen h-auto md:h-[64px] mb-10 p-4 md:px-20  bg-cyan-700 mx-auto">
+    <nav className="fixed top-0 left-0 z-30 flex flex-col md:flex-row items-center w-screen h-auto md:h-[64px] mb-10 p-4 md:px-20 bg-cyan-700 mx-auto">
       {/* left area */}
-      <div className="w-full h-full flex justify-center md:justify-start items-center text-stone-200 mb-4 md:mb-0">
+      <div className="relative w-full h-full flex justify-center md:justify-start items-center text-stone-200 mb-4 md:mb-0">
         <Link
           to="/?page=1"
           className="w-full h-full flex justify-start items-center"
@@ -39,7 +67,7 @@ const NavBar = ({ onSearch }) => {
         </Link>
       </div>
       {/* right area */}
-      <div className="w-full h-full flex flex-col md:flex-row justify-center md:justify-end items-center gap-4 md:gap-20">
+      <div className="w-full h-full flex flex-col md:flex-row justify-center md:justify-end items-center gap-4 md:gap-14">
         {/* search form  */}
         <form
           onSubmit={handleSearch}
@@ -59,6 +87,40 @@ const NavBar = ({ onSearch }) => {
             搜尋
           </button>
         </form>
+        <div className="flex justify-center items-center gap-8 text-stone-200">
+          {/* wish list icon */}
+          <a href="">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M11.566 21.112L12 20.5za.75.75 0 0 0 .867 0L12 20.5l.434.612l.008-.006l.021-.015l.08-.058q.104-.075.295-.219a38.5 38.5 0 0 0 4.197-3.674c1.148-1.168 2.315-2.533 3.199-3.981c.88-1.44 1.516-3.024 1.516-4.612c0-1.885-.585-3.358-1.62-4.358c-1.03-.994-2.42-1.439-3.88-1.439c-1.725 0-3.248.833-4.25 2.117C10.998 3.583 9.474 2.75 7.75 2.75c-3.08 0-5.5 2.639-5.5 5.797c0 1.588.637 3.171 1.516 4.612c.884 1.448 2.051 2.813 3.199 3.982a38.5 38.5 0 0 0 4.492 3.892l.08.058l.021.015z"
+              />
+            </svg>
+          </a>
+          {/* Login or out */}
+          <div className="w-20 flex justify-center items-center gap-4">
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="text-stone-200 hover:text-yellow-200 flex justify-center items-center"
+              >
+                登出
+              </button>
+            ) : (
+              <Link
+                to="/auth/login"
+                className="text-stone-200 hover:text-yellow-200 flex justify-center items-center"
+              >
+                登入
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
     </nav>
   );
